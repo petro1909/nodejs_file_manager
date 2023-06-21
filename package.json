@@ -1,0 +1,16 @@
+{
+  "name": "nodejs_file_manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petro1909/nodejs_file_manager.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
