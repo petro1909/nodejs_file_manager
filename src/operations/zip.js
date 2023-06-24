@@ -3,7 +3,7 @@ import zlip from "zlib";
 import stream from "stream/promises";
 import fs from "fs";
 import path from "path";
-import { getCurrentDirectory } from "../main.js";
+import { getCurrentDirectory } from "../util/directory.js";
 
 async function compress(compressingPath, compressedPath) {
   const resultCompressingPath = path.resolve(getCurrentDirectory(), compressingPath);

@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import fs from "fs/promises";
 import path from "path";
-import { getCurrentDirectory } from "../main.js";
+import { getCurrentDirectory } from "../util/directory.js";
 
 async function calculateHash(filePath) {
   let hashedFileText;

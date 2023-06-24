@@ -1,5 +1,4 @@
-import { isFileExist } from "../util/fileExistance.js";
-import { setCurrentDirectory, getCurrentDirectory } from "../main.js";
+import { setCurrentDirectory, getCurrentDirectory } from "../util/directory.js";
 import fs from "fs/promises";
 import path from "path";
 
