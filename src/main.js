@@ -1,6 +1,8 @@
 import { setCurrentDirectory, getCurrentDirectory } from "./util/directory.js";
 import { processingUserInput } from "./util/userInput.js";
 import os from "os";
+import { setUserName, getUserName } from "./util/userName.js";
+import { userExit } from "./util/exit.js";
 
 
 function start() {
@@ -14,13 +16,14 @@ function start() {
     console.error("there is no user name");
     process.exit(0);
   }
-  const userName = user[1];
+  setUserName(user[1]);
 
   setCurrentDirectory(os.homedir());
-  console.log(`Welcome to the File Manager, ${userName}!`);
+  console.log(`Welcome to the File Manager, ${getUserName()}!`);
   console.log(`You are currently in ${getCurrentDirectory()}`);
 
   process.stdin.on("data", processingUserInput);
-  process.stdin.on("exit", () => console.log(`Thank you for using File Manager, ${userName}, goodbye!`));
+  process.on("SIGINT", () => userExit(getUserName()));
 }
+
 start();
