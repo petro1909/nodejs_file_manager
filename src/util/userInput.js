@@ -18,24 +18,45 @@ async function processingUserInput(commandLine) {
   if(commandLine == ".exit") {
     userExit(getUserName());
   }
-  
-  const commandArray = commandLine.split(" ");
-  const commandName = commandArray[0];
-  
-  let commandParameters;
-  if(commandArray.length == 1) {
-    commandParameters = [];
-  } else {
-    commandParameters = commandArray.slice(1);
-  }
+
+
   try {
+    
+    let commandName = commandLine.match(/^\w+\s*/);
+    if(!commandName) throw new Error("Invalid input");
+    commandLine = commandLine.substring(commandName[0].length);
+    commandName = commandName[0].trim();
+    
     const commandFunction = commands[commandName];
     if(!commandFunction) {
       throw new Error("Invalid input: unknown command");
     }
-    if(commandParameters.length != commandFunction.length) {
-      throw new Error("Invalid input: invalid arguments number");
-    };
+
+    let commandParameters = [];
+    if(!commandFunction.length) {
+        if(commandLine.length != 0) throw new Error("Invalid input: invalid arguments number");
+    } else {
+      for(let i = 0; i < commandFunction.length; i++) {
+          let commandParameterResult = commandLine.match(/^('.+'\s*)/);
+          if(commandParameterResult) {
+            let commandParameter = commandParameterResult[0];
+            commandLine = commandLine.substring(commandParameter.length);
+            commandParameters[i] = commandParameter.trim().slice(1, -1);
+            continue;
+          }
+          commandLine = commandLine + " ";
+          commandParameterResult = commandLine.match(/^(.[^\s]+\s*)/);
+          if(!commandParameterResult) {
+            throw new Error("Invalid input: invalid arguments number");
+          }
+          let commandParameter = commandParameterResult[0];
+          commandLine = commandLine.substring(commandParameter.length);
+          commandParameters[i] = commandParameter.trim();
+      }
+      if(commandLine.length != 0) {
+        throw new Error("Invalid input: invalid arguments number");
+      }
+    }
     await commandFunction(...commandParameters);
   } catch(err) {
     console.error(err);
