@@ -43,7 +43,7 @@ async function rename(filePath, newName) {
   }
 
   try {
-    await fs.rename(filePath, newPath);
+    await fs.rename(resultFilePath, newPath);
   } catch(err) {
     throw new Error(`rename operation failed: ${err}`);
   }
