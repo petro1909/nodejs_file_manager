@@ -4,6 +4,8 @@ import { folderFunction } from "../operations/folder.js";
 import { osFunction } from "../operations/os.js";
 import { zipFunctions } from "../operations/zip.js";
 import { getCurrentDirectory } from "./directory.js";
+import { getUserName } from "./userName.js";
+import { userExit } from "./exit.js";
 
 let commands = {};
 
@@ -13,6 +15,10 @@ Object.assign(commands, fileFunctions, hashFunction, folderFunction, osFunction,
 
 async function processingUserInput(commandLine) {
   commandLine = commandLine.toString().trim();
+  if(commandLine == ".exit") {
+    userExit(getUserName());
+  }
+  
   const commandArray = commandLine.split(" ");
   const commandName = commandArray[0];
   
