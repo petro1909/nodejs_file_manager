@@ -51,7 +51,7 @@ async function rename(filePath, newName) {
 
 async function copy(fileFromPath, fileToPath) {
   const resultFileFromPath = path.resolve(getCurrentDirectory(), fileFromPath);
-  const resultFileToPath = path.resolve(getCurrentDirectory(), fileToPath);
+  const resultFileToPath = path.resolve(getCurrentDirectory(), fileToPath, path.basename(fileFromPath));
   
   if (!(await isFileExist(resultFileFromPath))) {
     throw new Error(`copy operation failed: ${resultFileFromPath} doesn't exist`);
@@ -62,10 +62,10 @@ async function copy(fileFromPath, fileToPath) {
 
   try {
     const readStream = createReadStream(resultFileFromPath);
-    const writeStream = createWriteStream(resultFileToPath , {flags: "w"});
+    const writeStream = createWriteStream(resultFileToPath);
     await pipeline(readStream, writeStream);
   } catch(err) {
-    throw new Error(`copy operation failed`);
+    throw new Error(`copy operation failed, ${err}`);
   }
 }
 async function move(fileFromPath, fileToPath) {
