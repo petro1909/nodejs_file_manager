@@ -7,8 +7,8 @@ import { getCurrentDirectory } from "../util/directory.js";
 
 async function compress(compressingPath, compressedPath) {
   const resultCompressingPath = path.resolve(getCurrentDirectory(), compressingPath);
-  const resultCompressedPath = path.resolve(getCurrentDirectory(), compressedPath);
-  
+  const resultCompressedPath = path.resolve(getCurrentDirectory(), compressedPath, path.basename(compressingPath)) + ".br";
+  console.log(resultCompressedPath);
   if(!(await isFileExist(resultCompressingPath))) {
     throw new Error("comress operation failed: source file doesn't exist");
   }
@@ -27,7 +27,8 @@ async function compress(compressingPath, compressedPath) {
 
 async function decompress(compressedPath, decompressedPath) {
     const resultCompressedPath = path.resolve(getCurrentDirectory(), compressedPath);
-    const resultDecompressedPath = path.resolve(getCurrentDirectory(), decompressedPath);
+    const fileName = path.parse(path.basename(compressedPath)).name;
+    const resultDecompressedPath = path.resolve(getCurrentDirectory(), decompressedPath, fileName);
     
     if(!(await isFileExist(resultCompressedPath))) {
       throw new Error("comress operation failed: source file doesn't exist");
